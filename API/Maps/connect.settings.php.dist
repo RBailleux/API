@@ -1,0 +1,6 @@
+<?php
+
+// Copy this file in this directory and remove '.dist' at the end of the file name.
+
+// Paste here your api key for Google Maps API Javascript
+$api_key_google_maps = 'xxxxxxxxxxxxxx';
