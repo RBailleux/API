@@ -5,12 +5,14 @@ function initMap() {
         center: myPosition
     });
 
+    // Create Marker container
     var marker = new google.maps.Marker({
         position: myPosition,
         map: map,
         title: 'Hello World!'
     });
 
+    // Create HTML content Modals Marker
     var contentString =
         '<div class="row">' +
             '<div class="col-xs-12">' +
@@ -39,10 +41,12 @@ function initMap() {
             '</div>' +
         '</div>';
 
+    // Add content HTML to Marker Container
     var infowindow = new google.maps.InfoWindow({
         content: contentString
     });
 
+    // Show Modal Marker on Click
     marker.addListener('click', function() {
         infowindow.open(map, marker);
     });
