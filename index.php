@@ -21,19 +21,22 @@ $geocoder = "http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=
         body {
             height: 100%;
         }
-        .map-responsive{
+        .map-responsive {
             overflow: hidden;
             padding-bottom: 50%;
             position: relative;
             height: 0;
         }
-        .map-responsive iframe{
+        .map-responsive iframe {
             left: 0;
             top: 0;
             height: 100%;
             width: 100%;
             position: absolute;
         }
+      .container-marker {
+        display: none;
+      }
     </style>
 </head>
 <body class="container">
