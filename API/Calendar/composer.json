@@ -1,0 +1,6 @@
+{
+  "name": "api-googleAgenda",
+  "require": {
+  "google/apiclient": "^2.0"
+  }
+}
