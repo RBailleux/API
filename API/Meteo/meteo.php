@@ -88,5 +88,5 @@ class Meteo {
 	}
 	
 }
-//$meteo = new Meteo(46.85341,2.3488, new dateTime());
+$meteo = new Meteo(46.85341,2.3488, new dateTime());
 ?>
