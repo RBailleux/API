@@ -63,7 +63,6 @@ class Meteo {
 				$closest = $item;
 			}
 		}
-		var_dump(new dateTime($date.' '.$closest.':00:00'));
 		return new dateTime($date.' '.$closest.':00:00');
 	}
 	
