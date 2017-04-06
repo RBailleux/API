@@ -5,10 +5,11 @@ class Meteo {
 	public $latitude;
 	public $date;
 	public $url;
+	public $exists = true;
 	public $temperature;
 	public $wind;
-	public $weatherType;
-	public $weatherLevel;
+	public $rainLevel;
+	public $snowRisk = false;
 	
 	public function __construct($latitude, $longitude, $date){
 		$this->setParameter('longitude', $longitude);
@@ -34,12 +35,21 @@ class Meteo {
 		$xml = simplexml_load_file($this->url) or die("Meteo feed not loading");
 		$date = date_format($this->dateRange(),'Y-m-d H:i:s').' UTC';
 		$meteo = $xml->xpath('/previsions/echeance [@timestamp="'.$date.'"]');
-		
-		$kelvinTempMin = $meteo[0]->temperature->level[0];
-		$kelvinTempMax = $meteo[0]->temperature->level[1];
-		
-		$kelvinTempMed = ($kelvinTempMin+$kelvinTempMax)/2;
-		$this->setParameter('temperature', $this->kelvinToCelsius($kelvinTempMed));
+		if(!$meteo){
+			$this->exists = false;
+		}
+		else{
+			$kelvinTempMin = $meteo[0]->temperature->level[0];
+			$kelvinTempMax = $meteo[0]->temperature->level[1];
+			$kelvinTempMed = ($kelvinTempMin+$kelvinTempMax)/2;
+			$this->setParameter('temperature', $this->kelvinToCelsius($kelvinTempMed));
+			$this->setParameter('wind', (float) $meteo[0]->vent_moyen->level);
+			
+			if((string)$meteo[0]->risque_neige == 'oui'){
+				$this->snowRisk = true;
+			}
+			$this->setParameter('rainLevel', (float)$meteo[0]->pluie*10);
+		}
 	}
 	
 	public function dateRange(){
@@ -61,9 +71,23 @@ class Meteo {
 		return $kelvin - 273.15;
 	}
 	
+	
+	public function exists(){
+		return $this->exists;
+	}
+	public function getTemperature(){
+		return $this->temperature;
+	}
+	public function getWind(){
+		return $this->wind;
+	}
+	public function getSnowRisk(){
+		return $this->snowRisk;
+	}
+	public function getRainLevel(){
+		return $this->rainLevel;
+	}
+	
 }
-$meteo = new Meteo(46.85341,2.3488, new dateTime());
-
-var_dump($meteo);
-
+//$meteo = new Meteo(46.85341,2.3488, new dateTime());
 ?>
